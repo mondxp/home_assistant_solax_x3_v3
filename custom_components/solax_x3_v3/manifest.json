@@ -1,0 +1,10 @@
+{
+  "domain": "solax_x3_v3",
+  "name": "SolaX X3 V3 Power",
+  "documentation": "https://github.com/mondxp/home_assistant_solax_x3_v3",
+  "requirements": ["aiohttp>=3.5.4, <4", "async_timeout>=4.0.2", "voluptuous>=0.11.5"],
+  "codeowners": ["@mondxp"],
+  "iot_class": "local_polling",
+  "config_flow": true,
+  "loggers": ["solax_x3_v3"]
+}
