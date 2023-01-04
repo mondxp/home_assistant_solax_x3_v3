@@ -36,56 +36,56 @@ DEFAULT_PORT = 80
 SCAN_INTERVAL = timedelta(seconds=30)
 
 
-SENSOR_DESCRIPTIONS: dict[tuple[Units, bool], SensorEntityDescription] = {
-    (Units.C, False): SensorEntityDescription(
+SENSOR_DESCRIPTIONS: dict[tuple[str, bool], SensorEntityDescription] = {
+    (Units.C.name, False): SensorEntityDescription(
         key=f"{Units.C}_{False}",
         device_class=SensorDeviceClass.TEMPERATURE,
         native_unit_of_measurement=TEMP_CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
     ),
-    (Units.KWH, False): SensorEntityDescription(
+    (Units.KWH.name, False): SensorEntityDescription(
         key=f"{Units.KWH}_{False}",
         device_class=SensorDeviceClass.ENERGY,
         native_unit_of_measurement=ENERGY_KILO_WATT_HOUR,
         state_class=SensorStateClass.MEASUREMENT,
     ),
-    (Units.KWH, True): SensorEntityDescription(
+    (Units.KWH.name, True): SensorEntityDescription(
         key=f"{Units.KWH}_{True}",
         device_class=SensorDeviceClass.ENERGY,
         native_unit_of_measurement=ENERGY_KILO_WATT_HOUR,
         state_class=SensorStateClass.TOTAL_INCREASING,
     ),
-    (Units.V, False): SensorEntityDescription(
+    (Units.V.name, False): SensorEntityDescription(
         key=f"{Units.V}_{False}",
         device_class=SensorDeviceClass.VOLTAGE,
         native_unit_of_measurement=ELECTRIC_POTENTIAL_VOLT,
         state_class=SensorStateClass.MEASUREMENT,
     ),
-    (Units.A, False): SensorEntityDescription(
+    (Units.A.name, False): SensorEntityDescription(
         key=f"{Units.A}_{False}",
         device_class=SensorDeviceClass.CURRENT,
         native_unit_of_measurement=ELECTRIC_CURRENT_AMPERE,
         state_class=SensorStateClass.MEASUREMENT,
     ),
-    (Units.W, False): SensorEntityDescription(
+    (Units.W.name, False): SensorEntityDescription(
         key=f"{Units.W}_{False}",
         device_class=SensorDeviceClass.POWER,
         native_unit_of_measurement=POWER_WATT,
         state_class=SensorStateClass.MEASUREMENT,
     ),
-    (Units.PERCENT, False): SensorEntityDescription(
+    (Units.PERCENT.name, False): SensorEntityDescription(
         key=f"{Units.PERCENT}_{False}",
         device_class=SensorDeviceClass.BATTERY,
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
     ),
-    (Units.HZ, False): SensorEntityDescription(
+    (Units.HZ.name, False): SensorEntityDescription(
         key=f"{Units.HZ}_{False}",
         device_class=SensorDeviceClass.FREQUENCY,
         native_unit_of_measurement=FREQUENCY_HERTZ,
         state_class=SensorStateClass.MEASUREMENT,
     ),
-    (Units.NONE, False): SensorEntityDescription(
+    (Units.NONE.name, False): SensorEntityDescription(
         key=f"{Units.NONE}_{False}",
         state_class=SensorStateClass.MEASUREMENT,
     ),
@@ -107,7 +107,7 @@ async def async_setup_entry(
     async_track_time_interval(hass, endpoint.async_refresh, SCAN_INTERVAL)
     devices = []
     for sensor, (idx, measurement) in api.inverter.sensor_map().items():
-        description = SENSOR_DESCRIPTIONS[(measurement.unit, measurement.is_monotonic)]
+        description = SENSOR_DESCRIPTIONS[(measurement.unit.name, measurement.is_monotonic)]
 
         uid = f"{serial}-{idx}"
         devices.append(
